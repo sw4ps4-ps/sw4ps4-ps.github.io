@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>El Hamrawy Center</title>
+<style>
+  html, body { 
+    margin:0; 
+    padding:0; 
+    background:#080b11; 
+    color:#c8ced8;
+    font:15px/1.45 "Segoe UI", system-ui, sans-serif; 
+  }
+  #brand { text-align:center; padding:8px 10px; background:#0c1017; border-bottom:1px solid #1a2332; }
+  #brand b { font-size:15px; font-weight:700; letter-spacing:.14em; color:#00f0ff; vertical-align:middle; text-shadow:0 0 8px rgba(0,240,255,0.4); }
+
+  /* تصميم كارت مركز الحمراوي الجيمنج */
+  .store-card {
+    max-width: 400px;
+    margin: 20px auto 15px;
+    padding: 22px 18px;
+    background: linear-gradient(145deg, #0f172a, #080d1a);
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 163, 255, 0.15);
+  }
+  .store-title-ar {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 2px;
+    text-shadow: 0 0 12px rgba(0, 163, 255, 0.5);
+  }
+  .store-title-en {
+    color: #00f0ff;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .store-sub {
+    color: #94a3b8;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    direction: rtl;
+  }
+  .badge-exp {
+    display: inline-block;
+    background: linear-gradient(135deg, #f59e0b, #b45309);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 12px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+  }
+  .services-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .service-tag {
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    color: #38bdf8;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 14px;
+  }
+  .store-manager {
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    direction: rtl;
+  }
+  .store-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    background: rgba(37, 211, 102, 0.12);
+    color: #25d366;
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    direction: ltr;
+  }
+  .wa-icon {
+    width: 16px;
+    height: 16px;
+    fill: #25d366;
+  }
+
+  #wrap { padding:10px 18px; text-align: center; }
+  #state { font-size:18px; font-weight:700; margin:0 0 6px; }
+  #det { font-size:13px; color:#8b95a3; margin:0 0 4px; }
+  #det b { color:#c8ced8; font-weight:600; }
+  #cache { font-size:12px; color:#5c6672; margin:0 0 10px; min-height:14px; }
+  #cache.cacheok { color:#38bdf8; }
+  .ok { color:#38bdf8; } .bad { color:#f87171; } .warn { color:#fbbf24; }
+</style>
+</head>
+<body>
+<div id="brand"><b>El Hamrawy Center</b></div>
+
+<!-- كارت المتجر -->
+<div class="store-card">
+  <div class="store-title-ar">مركز الحمراوي</div>
+  <div class="store-title-en">El Hamrawy Center</div>
+  <div class="store-sub">لجميع خدمات البلاي ستيشن والأكس بوكس</div>
+  <div class="badge-exp">خمسة وعشرون عاماً من الخبرة</div>
+  
+  <div class="services-grid">
+    <span class="service-tag">PlayStation</span>
+    <span class="service-tag">Xbox</span>
+    <span class="service-tag">Games</span>
+    <span class="service-tag">Software</span>
+    <span class="service-tag">Hardware</span>
+    <span class="service-tag">Accessories</span>
+  </div>
+
+  <div class="store-manager">إدارة م / أحمد الحمراوي</div>
+  
+  <div class="store-whatsapp">
+    <svg class="wa-icon" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+    01200220043
+  </div>
+</div>
+
+<div id="wrap">
+  <div id="state">detecting firmware...</div>
+  <div id="det"></div>
+  <div id="cache"></div>
+</div>
+
+<script>
+(function () {
+    var stateEl = document.getElementById("state");
+    var detEl = document.getElementById("det");
+    var cacheEl = document.getElementById("cache");
+    function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
+    function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
+    var params = new URLSearchParams(location.search);
+
+    var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
+
+    var key = null, fwnum = null;
+    var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+    if (m) {
+        var ms = parseInt(m[2], 16).toString(16);
+        if (ms.length < 2) ms = "0" + ms;
+        key = m[1] + "." + ms;
+        fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
+    }
+
+    var forced = params.get("force") === "1";
+    var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
+    detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
+        + (supported ? " &middot; <b>supported</b>"
+                     : " &middot; not in this build's kernel table");
+
+    var target = "jb.html" + location.search;
+    function go() { setState("loading jailbreak...", "warn"); location.replace(target); }
+
+    function waitForTap(msg, action) {
+        setState(msg, "warn");
+        function fire() {
+            window.removeEventListener("click", fire);
+            window.removeEventListener("keydown", fire);
+            action();
+        }
+        window.addEventListener("click", fire);
+        window.addEventListener("keydown", fire);
+    }
+
+    if (!supported) {
+        setState("UNSUPPORTED FIRMWARE", "bad");
+        waitForTap("UNSUPPORTED (" + (key || "unknown") + ") -- press X or tap to run anyway", go);
+        return;
+    }
+
+    var ac = window.applicationCache;
+    if (!ac || !document.documentElement.hasAttribute("manifest")) {
+        go();
+    } else if (!navigator.onLine) {
+        setCache("offline -- from cache", true);
+        go();
+    } else if (ac.status === ac.IDLE) {
+        setCache("cached", true);
+        go();
+    } else if (ac.status === ac.UPDATEREADY) {
+        try { ac.swapCache(); } catch (e) {}
+        setCache("update downloaded", true);
+        waitForTap("UPDATE READY -- press X or tap to reload & run",
+                   function () { location.reload(); });
+    } else {
+        setCache("checking cache...");
+        ac.addEventListener("downloading",
+            function () { setCache("caching for offline (first run)..."); }, false);
+        ac.addEventListener("progress", function (e) {
+            if (e && e.total)
+                setCache("caching " + Math.round((e.loaded / e.total) * 100) + "%");
+        }, false);
+        ac.addEventListener("cached", function () {
+            setCache("cached for offline use", true);
+            waitForTap("CACHED (first run) -- press X or tap to run", go);
+        }, false);
+        ac.addEventListener("updateready", function () {
+            try { ac.swapCache(); } catch (e) {}
+            setCache("update downloaded", true);
+            waitForTap("UPDATE READY -- press X or tap to reload & run",
+                       function () { location.reload(); });
+        }, false);
+        ac.addEventListener("noupdate", function () {
+            setCache("cached -- offline ready", true);
+            go();
+        }, false);
+        ac.addEventListener("error", function () {
+            setCache("cache unavailable");
+            waitForTap("CACHE FAILED -- press X or tap to run anyway", go);
+        }, false);
+        ac.addEventListener("obsolete", function () {
+            setCache("cache obsolete");
+            waitForTap("CACHE OBSOLETE -- press X or tap to run", go);
+        }, false);
+    }
+})();
+</script>
+</body>
+</html>
