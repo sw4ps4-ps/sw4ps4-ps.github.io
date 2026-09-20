@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ar" dir="rtl" manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fight Club Ps Store</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0; padding: 0; width: 100%; height: 100%;
+        background: #080002 url('bg.jpg') no-repeat center center fixed;
+        background-size: cover; color: #ffffff;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        overflow: hidden;
+      }
+      body::before {
+        content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(circle, rgba(15, 0, 5, 0.5) 0%, rgba(5, 0, 2, 0.88) 100%);
+        z-index: 1;
+      }
+      .card {
+        position: relative; z-index: 2; width: 90%; max-width: 500px;
+        background: rgba(18, 10, 14, 0.78); backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 30, 66, 0.35);
+        border-radius: 20px; box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85);
+        padding: 28px 24px; text-align: center;
+      }
+      #brand h1 { font-size: 26px; font-weight: 900; color: #fff; text-shadow: 0 0 12px rgba(255, 30, 66, 0.9); margin: 0; }
+      #brand span { font-size: 12px; color: #ff4d6d; letter-spacing: 3px; display: block; margin-top: 5px; }
+      .fw-info { background: rgba(255, 30, 66, 0.12); border: 1px solid rgba(255, 30, 66, 0.35); border-radius: 10px; padding: 10px; font-size: 14px; margin: 15px 0; }
+      .fw-info b { color: #ff1e42; }
+      #spin {
+        width: 45px; height: 45px; margin: 15px auto;
+        border: 4px solid rgba(255, 30, 66, 0.2); border-top-color: #ff1e42;
+        border-radius: 50%; animation: spin 0.9s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .wait-banner { font-size: 15px; font-weight: 700; color: #ffffff; }
+      
+      /* إخفاء أو إظهار سجل المخرجات الافتراضي */
+      #wrap { position: relative; z-index: 3; }
+      #state { font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #2ecc71; }
+      #out { font-family: monospace; font-size: 11px; text-align: left; color: #00ffcc; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div id="brand">
+        <h1>FIGHT CLUB PS STORE</h1>
+        <span>EXPLOIT ENGINE SYSTEM</span>
+      </div>
+      <div class="fw-info">
+        برمجيات النظام: <b id="fw-val">جاري الفحص...</b>
+      </div>
+      <div id="spin"></div>
+      <div class="wait-banner">جاري معالجة الثغرة والتعديل...</div>
+    </div>
+
+    <!-- العناصر المطلوبة برمجياً بواسطة ملفات core.js و jb.js -->
+    <div id="wrap">
+      <div id="state"></div>
+      <div id="out"></div>
+    </div>
+
+    <script>
+      (function() {
+        var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+        var fwVal = document.getElementById("fw-val");
+        if (m) {
+          var ms = parseInt(m[2], 16).toString(16);
+          if (ms.length < 2) ms = "0" + ms;
+          fwVal.textContent = "PS4 FW " + m[1] + "." + ms;
+        } else {
+          fwVal.textContent = "PS4 FW (إصدار مخصص)";
+        }
+      })();
+    </script>
+
+    <!-- ترتيب استدعاء ملفات الثغرة كما في الموقع الأصلي -->
+    <script src="int64.js"></script>
+    <script src="ps4_offsets.js"></script>
+    <script src="mem.js"></script>
+    <script src="core.js"></script>
+    <script src="jb.js"></script>
+  </body>
+</html>
