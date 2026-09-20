@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fight Club Ps Store</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #080002 url('bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff;
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle, rgba(15, 0, 5, 0.5) 0%, rgba(5, 0, 2, 0.88) 100%);
+    z-index: 1;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 500px;
+    background: rgba(18, 10, 14, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 30, 66, 0.35);
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 30, 66, 0.2);
+    padding: 28px 24px;
+    text-align: center;
+  }
+
+  #brand {
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  #brand h1 {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 30, 66, 0.9);
+    margin: 0;
+    text-transform: uppercase;
+  }
+  #brand span {
+    font-size: 12px;
+    color: #ff4d6d;
+    letter-spacing: 3px;
+    display: block;
+    margin-top: 5px;
+    font-weight: 600;
+  }
+
+  .fw-badge {
+    background: rgba(255, 30, 66, 0.12);
+    border: 1px solid rgba(255, 30, 66, 0.35);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #e0e0e0;
+    margin-bottom: 16px;
+    display: inline-block;
+    width: 100%;
+    line-height: 1.6;
+  }
+  .fw-badge b { color: #ff1e42; font-weight: 800; }
+
+  #state {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 12px 0;
+    color: #ffffff;
+  }
+
+  .ok { color: #2ecc71 !important; text-shadow: 0 0 10px rgba(46,204,113,0.5); }
+  .bad { color: #ff4757 !important; text-shadow: 0 0 10px rgba(255,71,87,0.5); }
+  .warn { color: #ffa502 !important; text-shadow: 0 0 10px rgba(255,165,2,0.5); }
+
+  .cache-box {
+    margin-top: 18px;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  #cache {
+    font-size: 13px;
+    color: #cccccc;
+    margin-bottom: 10px;
+    min-height: 18px;
+  }
+  #cache.cacheok {
+    color: #2ecc71;
+    font-weight: bold;
+  }
+  .progress-track {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    display: none;
+    margin-top: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff1e42, #ff4d6d);
+    border-radius: 5px;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 12px #ff1e42;
+  }
+
+  .wait-msg {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #aaaaaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .spinner-mini {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 30, 66, 0.3);
+    border-top-color: #ff1e42;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div id="brand">
+    <h1>FIGHT CLUB PS STORE</h1>
+    <span>SYSTEM HOST EXPLOIT</span>
+  </div>
+
+  <div class="fw-badge" id="det">جاري فحص نظام البلايستيشن...</div>
+
+  <div id="state">جاري التحقق...</div>
+
+  <div class="cache-box">
+    <div id="cache">جاري فحص حالة الكاش...</div>
+    <div class="progress-track" id="p-track">
+      <div class="progress-fill" id="p-fill"></div>
+    </div>
+  </div>
+
+  <div class="wait-msg">
+    <span class="spinner-mini"></span>
+    <span>يرجى الانتظار، جاري معالجة الطلب تلقائياً...</span>
+  </div>
+</div>
+
+<script>
+(function () {
+    var stateEl = document.getElementById("state");
+    var detEl = document.getElementById("det");
+    var cacheEl = document.getElementById("cache");
+    var pTrack = document.getElementById("p-track");
+    var pFill = document.getElementById("p-fill");
+
+    function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
+    function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
+    var params = new URLSearchParams(location.search);
+
+    var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
+
+    var key = null, fwnum = null;
+    var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+    if (m) {
+        var ms = parseInt(m[2], 16).toString(16);
+        if (ms.length < 2) ms = "0" + ms;
+        key = m[1] + "." + ms;
+        fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
+    }
+
+    var forced = params.get("force") === "1";
+    var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
+    detEl.innerHTML = "برمجيات نظام جهاز البلايستيشن 4: <b>" + (key || "غير معروف") + "</b>"
+        + (supported ? " &middot; <b style='color:#2ecc71;'>مدعوم ✓</b>"
+                     : " &middot; <b style='color:#ff4757;'>غير متاح بالجدول</b>");
+
+    var target = "jb.html" + location.search;
+    function go() { setState("جاري فتح التعديلة...", "warn"); location.replace(target); }
+
+    function waitForTap(msg, action) {
+        setState(msg, "warn");
+        function fire() {
+            window.removeEventListener("click", fire);
+            window.removeEventListener("keydown", fire);
+            action();
+        }
+        window.addEventListener("click", fire);
+        window.addEventListener("keydown", fire);
+    }
+
+    if (!supported) {
+        setState("إصدار غير مدعوم", "bad");
+        waitForTap("إصدار غير مدعوم (" + (key || "unknown") + ") -- اضغط X أو التلمس للاستمرار", go);
+        return;
+    }
+
+    var ac = window.applicationCache;
+    if (!ac || !document.documentElement.hasAttribute("manifest")) {
+        go();
+    } else if (!navigator.onLine) {
+        setCache("جاهز أوفلاين (تم التحميل من الكاش) ✓", true);
+        go();
+    } else if (ac.status === ac.IDLE) {
+        setCache("تم حفظ الكاش بنجاح! جاهز للعمل بدون إنترنت ✓", true);
+        go();
+    } else if (ac.status === ac.UPDATEREADY) {
+        try { ac.swapCache(); } catch (e) {}
+        setCache("تم إكتشاف تحديث وجاري تفصيله", true);
+        waitForTap("التحديث جاهز -- اضغط X للتشغيل", function () { location.reload(); });
+    } else {
+        setCache("جاري فحص الكاش...");
+        ac.addEventListener("downloading", function () {
+            pTrack.style.display = "block";
+            setCache("جاري حفظ الكاش للأوفلاين (لأول مرة)...");
+        }, false);
+        ac.addEventListener("progress", function (e) {
+            if (e && e.total) {
+                pTrack.style.display = "block";
+                var pct = Math.round((e.loaded / e.total) * 100);
+                pFill.style.width = pct + "%";
+                setCache("جاري تحميل الكاش: " + pct + "%");
+            }
+        }, false);
+        ac.addEventListener("cached", function () {
+            pTrack.style.display = "block";
+            pFill.style.width = "100%";
+            setCache("تم تحميل الكاش بنجاح! يمكنك الآن الاستخدام بدون إنترنت ✓", true);
+            waitForTap("تم الحفظ بنجاح -- اضغط X أو المذ للبدء", go);
+        }, false);
+        ac.addEventListener("updateready", function () {
+            try { ac.swapCache(); } catch (e) {}
+            setCache("تم تحديث الكاش بنجاح!", true);
+            waitForTap("التحديث جاهز -- اضغط X لإعادة التحميل", function () { location.reload(); });
+        }, false);
+        ac.addEventListener("noupdate", function () {
+            setCache("تم تحميل الكاش بنجاح! جاهز للعمل بدون إنترنت ✓", true);
+            go();
+        }, false);
+        ac.addEventListener("error", function () {
+            setCache("تعذر تحميل الكاش الأوفلاين");
+            waitForTap("خطأ في الكاش -- اضغط X لتجاوز الخطأ", go);
+        }, false);
+        ac.addEventListener("obsolete", function () {
+            setCache("الملف المخبأ قديم");
+            waitForTap("الكاش قديم -- اضغط X للمتابعة", go);
+        }, false);
+    }
+})();
+</script>
+</body>
+</html>
