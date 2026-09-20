@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fight Club Ps Store</title>
+<style>
+  html, body { 
+    margin:0; 
+    padding:0; 
+    min-height: 100vh;
+    background: #000000 url('bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #ffffff;
+    font: 16px/1.5 "Segoe UI", system-ui, sans-serif; 
+  }
+  #brand { 
+    text-align: center; 
+    padding: 12px 10px; 
+    background: rgba(0, 0, 0, 0.90);
+    border-bottom: 2px solid #334155; 
+  }
+  #brand b { 
+    font-size: 20px; 
+    font-weight: 700; 
+    letter-spacing: 0.15em;
+    color: #ffffff; 
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  #wrap { 
+    padding: 25px; 
+    max-width: 550px;
+    margin: 40px auto;
+    background: rgba(15, 23, 42, 0.94);
+    border: 1px solid #475569;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+    text-align: center;
+  }
+  #fw-info {
+    font-size: 18px;
+    font-weight: 800;
+    color: #facc15;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 8px 18px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 15px;
+    border: 1px solid #eab308;
+    box-shadow: 0 0 12px rgba(234, 179, 8, 0.4);
+  }
+  #state { 
+    font-size: 22px; 
+    font-weight: 700; 
+    margin-bottom: 15px;
+    color: #60a5fa; 
+  }
+  #det { 
+    font-size: 15px; 
+    color: #f1f5f9; 
+    margin-bottom: 15px; 
+    line-height: 1.6;
+  }
+  #bar-container {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin: 15px 0;
+    overflow: hidden;
+    border: 1px solid #334155;
+    height: 16px;
+  }
+  #bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #60a5fa);
+    border-radius: 8px;
+    transition: width 0.3s ease;
+  }
+  #cache { 
+    font-size: 16px; 
+    font-weight: 600;
+    color: #facc15; 
+    margin-top: 15px; 
+    padding: 12px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid #334155;
+    border-radius: 6px;
+  }
+  #cache.cacheok { 
+    color: #4ade80; 
+    border-color: #22c55e;
+  }
+  .btn-continue {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 10px 22px;
+    background: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 15px;
+  }
+</style>
+</head>
+<body>
+<div id="brand"><b>Fight Club Ps Store</b></div>
+
+<div id="wrap">
+  <div id="fw-info">PS4 Firmware: <span id="fw-ver">Detecting...</span></div>
+  <div id="state">Caching Status</div>
+  <div id="det">Checking offline cache status...</div>
+  
+  <div id="bar-container">
+    <div id="bar"></div>
+  </div>
+
+  <div id="cache">Initializing Application Cache...</div>
+  <div id="actions"></div>
+</div>
+
+<script>
+  function getPS4Version() {
+    let ua = navigator.userAgent;
+    let pos = ua.indexOf('PlayStation 4');
+    if (pos !== -1) {
+      let ver = ua.substring(pos + 14, pos + 19).trim();
+      return 'v' + ver;
+    }
+    let match = ua.match(/PlayStation 4[\/\s]([0-9\.]+)/i);
+    if (match && match[1]) return 'v' + match[1];
+    return 'PS4 FW Unknown';
+  }
+
+  document.getElementById('fw-ver').textContent = getPS4Version();
+
+  const cacheStatus = document.getElementById('cache');
+  const det = document.getElementById('det');
+  const progressBar = document.getElementById('bar');
+
+  if (window.applicationCache) {
+    const appCache = window.applicationCache;
+
+    appCache.addEventListener('checking', function() {
+      cacheStatus.textContent = 'Checking for updates...';
+      progressBar.style.width = '15%';
+    }, false);
+
+    appCache.addEventListener('downloading', function() {
+      cacheStatus.textContent = 'Downloading cache files...';
+      det.innerHTML = '<b>Please wait:</b> Saving PS4 exploit offline.';
+      progressBar.style.width = '40%';
+    }, false);
+
+    appCache.addEventListener('progress', function(e) {
+      if (e.lengthComputable) {
+        let perc = Math.round((e.loaded / e.total) * 100);
+        cacheStatus.textContent = 'Downloading: ' + perc + '%';
+        progressBar.style.width = perc + '%';
+      }
+    }, false);
+
+    appCache.addEventListener('cached', function() {
+      progressBar.style.width = '100%';
+      cacheStatus.className = 'cacheok';
+      cacheStatus.innerHTML = 'Caching Complete!<br>Close Browser & Disconnect Internet.';
+      det.innerHTML = 'Page is fully saved for <b>Offline Use</b>.';
+      document.getElementById('actions').innerHTML = '<a href="jb.html" class="btn-continue">Launch Exploit Now</a>';
+    }, false);
+
+    appCache.addEventListener('updateready', function() {
+      appCache.swapCache();
+      progressBar.style.width = '100%';
+      cacheStatus.className = 'cacheok';
+      cacheStatus.innerHTML = 'Cache Updated!';
+      setTimeout(() => { window.location.reload(); }, 1000);
+    }, false);
+
+    appCache.addEventListener('noupdate', function() {
+      progressBar.style.width = '100%';
+      cacheStatus.className = 'cacheok';
+      det.innerHTML = 'Offline mode ready. Redirecting...';
+      setTimeout(() => { window.location.href = 'jb.html'; }, 500);
+    }, false);
+
+    appCache.addEventListener('error', function() {
+      if (!navigator.onLine || appCache.status === appCache.UNCACHED) {
+        cacheStatus.textContent = 'Offline Mode Ready';
+        cacheStatus.className = 'cacheok';
+        det.innerHTML = 'Redirecting to Exploit...';
+        progressBar.style.width = '100%';
+        setTimeout(() => { window.location.href = 'jb.html'; }, 500);
+      } else {
+        cacheStatus.textContent = 'Cache Error! Check Files.';
+      }
+    }, false);
+  }
+</script>
+</body>
+</html>
