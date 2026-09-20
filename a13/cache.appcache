@@ -1,0 +1,20 @@
+CACHE MANIFEST
+# v10.0 PS4 Offline Reloaded
+
+CACHE:
+index.html
+jb.html
+jb.js
+bg.jpg
+core.js
+int64.js
+mem.js
+ps4_offsets.js
+rpc_worker.js
+payload2.bin
+patches/1302.bin
+patches/1350.bin
+patches/1352.bin
+
+NETWORK:
+*
