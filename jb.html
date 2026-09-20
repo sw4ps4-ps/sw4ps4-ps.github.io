@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fight Club PS Store</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        width: 100vw; height: 100vh;
+        background: #080002 url('bg.jpg') no-repeat center center fixed;
+        background-size: cover; color: #fff;
+        font-family: system-ui, -apple-system, sans-serif;
+        display: flex; align-items: center; justify-content: center;
+        overflow: hidden;
+      }
+      .card {
+        width: 90%; max-width: 480px;
+        background: rgba(18, 10, 14, 0.85);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 30, 66, 0.4);
+        border-radius: 16px;
+        padding: 24px; text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      }
+      h1 { font-size: 24px; color: #fff; text-shadow: 0 0 10px #ff1e42; }
+      span.sub { font-size: 11px; color: #ff4d6d; letter-spacing: 2px; display: block; margin-bottom: 15px; }
+      .fw { background: rgba(255, 30, 66, 0.15); border: 1px solid rgba(255, 30, 66, 0.3); border-radius: 8px; padding: 8px; font-size: 13px; margin-bottom: 15px; }
+      .fw b { color: #ff1e42; }
+      
+      #wrap { margin-top: 10px; width: 100%; text-align: left; }
+      #state { font-size: 15px; font-weight: bold; color: #2ecc71; text-align: center; margin-bottom: 8px; }
+      #out {
+        font-family: monospace; font-size: 11px; color: #00ffcc;
+        background: rgba(0, 0, 0, 0.7); padding: 10px; border-radius: 8px;
+        max-height: 140px; overflow-y: auto; white-space: pre-wrap; direction: ltr;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>FIGHT CLUB PS STORE</h1>
+      <span class="sub">EXPLOIT ENGINE SYSTEM</span>
+      <div class="fw">Firmware: <b id="fw-val">Detecting...</b></div>
+
+      <div id="wrap">
+        <div id="state">Initializing exploit...</div>
+        <pre id="out"></pre>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+        var fwVal = document.getElementById("fw-val");
+        if (m) {
+          var ms = parseInt(m[2], 16).toString(16);
+          if (ms.length < 2) ms = "0" + ms;
+          fwVal.textContent = "PS4 FW " + m[1] + "." + ms;
+        } else {
+          fwVal.textContent = "PS4 FW Custom";
+        }
+      })();
+    </script>
+    <script src="int64.js"></script>
+    <script src="ps4_offsets.js"></script>
+    <script src="mem.js"></script>
+    <script src="core.js"></script>
+    <script src="jb.js"></script>
+  </body>
+</html>
