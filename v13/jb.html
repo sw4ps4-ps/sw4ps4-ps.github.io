@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Fight Club Ps Store</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: #000000 url('bg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #ffffff;
+        font: 15px/1.45 "Segoe UI", system-ui, sans-serif;
+      }
+      #brand {
+        text-align: center;
+        padding: 12px 10px;
+        background: rgba(0, 0, 0, 0.85);
+        border-bottom: 2px solid #334155;
+      }
+      #brand b {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        color: #ffffff;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+      }
+
+      #spin {
+        position: fixed;
+        top: calc(50% + 20px);
+        left: 50%;
+        width: 50px;
+        height: 50px;
+        margin: -25px 0 0 -25px;
+        border: 5px solid rgba(255, 255, 255, 0.2);
+        border-top-color: #60a5fa;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      #msg {
+        position: fixed;
+        top: 45%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+        display: none;
+      }
+      #wrap {
+        padding: 0;
+      }
+      #state,
+      #out {
+        display: none;
+      }
+
+      body.done #spin,
+      body.fail #spin {
+        display: none;
+      }
+      body.fail #msg {
+        display: block;
+        color: #f87171;
+      }
+
+      body.log #spin,
+      body.log #msg {
+        display: none;
+      }
+      body.log #wrap {
+        padding: 20px;
+      }
+      body.log #state {
+        display: block;
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0 0 10px;
+        color: #60a5fa;
+      }
+      body.log #out {
+        display: block;
+        white-space: pre-wrap;
+        font: 13px/1.5 Consolas, monospace;
+        background: rgba(15, 23, 42, 0.92);
+        border: 1px solid #334155;
+        border-radius: 8px;
+        padding: 12px 15px;
+        height: calc(100vh - 150px);
+        overflow-y: auto;
+        color: #f8fafc;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      }
+      .ok { color: #4ade80; }
+      .bad { color: #f87171; }
+      .warn { color: #facc15; }
+      .safe { color: #4ade80; }
+      .danger { color: #f87171; }
+      code { color: #93c5fd; }
+    </style>
+  </head>
+  <body>
+    <div id="brand">
+      <b>Fight Club Ps Store</b>
+    </div>
+    <div id="spin"></div>
+    <div id="msg">Restart your console</div>
+    <div id="wrap">
+      <div id="state"></div>
+      <div id="out"></div>
+    </div>
+    <script type="module">
+      import "./jb.js?v=10";
+    </script>
+  </body>
+</html>
