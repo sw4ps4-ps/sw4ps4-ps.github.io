@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ar" dir="rtl" manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>بيت الألعاب - PS Jailbreak</title>
+    <style>
+      * { box-sizing: border-box; }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: #080b11;
+        color: #c8ced8;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .card {
+        position: relative;
+        width: 90%;
+        max-width: 420px;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 240, 255, 0.2);
+        border-radius: 16px;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(0, 240, 255, 0.1);
+      }
+
+      .brand {
+        font-size: 24px;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 2px;
+        text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+      }
+      .sub {
+        font-size: 11px;
+        color: #00f0ff;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+      }
+
+      /* running spinner */
+      #spin {
+        width: 42px;
+        height: 42px;
+        margin: 15px auto;
+        border: 4px solid #1e293b;
+        border-top-color: #00f0ff;
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      #msg {
+        text-align: center;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+        display: none;
+        color: #fbbf24;
+      }
+      #wrap {
+        padding: 0;
+      }
+      #state,
+      #out {
+        display: none;
+      }
+
+      body.done #spin {
+        display: none;
+      }
+      body.fail #spin {
+        display: none;
+      }
+      body.fail #msg {
+        display: block;
+      }
+
+      /* ?log=1 */
+      body.log .card {
+        max-width: 95%;
+        width: 100%;
+        height: 95vh;
+        display: flex;
+        flex-direction: column;
+      }
+      body.log #spin,
+      body.log #msg {
+        display: none;
+      }
+      body.log #wrap {
+        padding: 0;
+        flex-grow: 1;
+      }
+      body.log #state {
+        display: block;
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0 0 8px;
+        text-align: right;
+      }
+      body.log #out {
+        display: block;
+        white-space: pre-wrap;
+        font: 12px/1.45 Consolas, monospace;
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        border-radius: 8px;
+        padding: 10px 12px;
+        height: calc(100vh - 160px);
+        overflow-y: auto;
+        text-align: left;
+        direction: ltr;
+      }
+      .ok { color: #38bdf8; }
+      .bad { color: #f87171; }
+      .warn { color: #fbbf24; }
+      .safe { color: #38bdf8; }
+      .danger { color: #f87171; }
+      code { color: #93c5fd; }
+    </style>
+  </head>
+  <body>
+
+    <div class="card">
+      <div class="brand">بيت الألعاب</div>
+      <div class="sub">GAMING STORE</div>
+
+      <div id="spin"></div>
+      <div id="msg">Restart your console</div>
+      <div id="wrap">
+        <div id="state"></div>
+        <div id="out"></div>
+      </div>
+    </div>
+
+    <script type="module">
+      import "./jb.js?v=10";
+    </script>
+  </body>
+</html>
